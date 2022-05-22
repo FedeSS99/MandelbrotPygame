@@ -20,15 +20,11 @@ La operación se aplicara de forma iterada siguiendo así el comportamiento de c
 ## Evaluación y visualización del conjunto
 Puesto que no es posible calcular infinitas iteraciones de la función generadora se ve la necesidad de fijar una cantidad de iteraciones máxima que delimite la cantidad de 
 operaciones que se realicen por pixel en el conjunto por visualizar; siendo que el arreglo que se utilizará para dar con el conjunto consistira en valores localizados entre 0 y 1.
-Inicialmente se encuentran todos los elementos con valor de 0 pero al obtener la cantidad de iteraciones de un número complejo fijo tendremos que tener un arreglo de 3 canales de dimension (Ny,Nx) que conformaran los canales de color RGB. Para cada canal se utiliza funciones senoidales tal que
+Inicialmente se encuentran todos los elementos con valor de 0 pero al obtener la cantidad de iteraciones de un número complejo fijo tendremos que tener un arreglo de 3 canales de dimension (Ny,Nx) que conformaran los canales de color RGB. Para cada canal se utiliza funciones senoidales
 ```diff
-t = iteraciones
-```
-Y para cada canal tendremos que
-```diff
-Arreglo[i,j,0] = 255*(0.5*(1.0+sin(0.1*t)))
-Arreglo[i,j,1] = 255*(0.5*(1.0+sin(0.1*t + 1.0)) )
-Arreglo[i,j,2] = 255*(0.5*(1.0+sin(0.1*t + 2.0)) )
+r = 255*(0.5*(1.0+sin(iteracion*0.25 + 1.0)) )
+g = 255*(0.5*(1.0+sin(iteracion*0.5 + 2.0)) 
+b = 255*(0.5*(1.0+sin(iteracion*0.75 + 3.0)) )
 ```
 ## Interacciones con usuario
 El entorno utilizado para mostrar el conjunto de Mandelbrot es OpenCV por lo que se asignaron teclas con acciones para manipular las variables que establecen los cálculos del conjunto:
