@@ -19,6 +19,7 @@ cdef extern from "math.h":
 @cython.wraparound(False)
 @cython.boundscheck(False)
 @cython.cdivision(True)
+@cython.profile(False)
 cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
     cdef:
         int i,j, maxThreads
@@ -28,7 +29,7 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, 
         int H = Conjunto.shape[1]
         Dtype_t FactorReal,FactorIma
     
-    maxThreads = <int >omp_get_max_threads()
+    maxThreads = <int>omp_get_max_threads()
     omp_set_num_threads(maxThreads)
 
     FactorReal = (xmax-xmin)/<Dtype_t>(W-1) 
@@ -54,7 +55,7 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, 
             Conjunto[i,j,1] = <Utype_t> g
             Conjunto[i,j,2] = <Utype_t> b
 
-
+@cython.nonecheck(False)
 def CythonMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
     CicloParaleloMandelbrot(Conjunto, MaxIter, xmin, xmax, ymin, ymax)
 
@@ -67,6 +68,7 @@ cdef Dtype_t InterpolacionLineal(Dtype_t inicio, Dtype_t final, Dtype_t tasa):
 
 @cython.nonecheck(False)
 @cython.cdivision(True)
+@cython.profile(False)
 def ZoomInOutConjunto(int Nx, int Ny, int x, int y, int evento, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
     cdef:
         Dtype_t x0, y0
@@ -87,6 +89,5 @@ def ZoomInOutConjunto(int Nx, int Ny, int x, int y, int evento, Dtype_t xmin, Dt
         ymin = InterpolacionLineal(y0, ymin, escalaOut)
         xmax = InterpolacionLineal(x0, xmax, escalaOut)
         ymax = InterpolacionLineal(y0, ymax, escalaOut)
-    
     
     return xmin, xmax, ymin, ymax
