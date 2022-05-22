@@ -39,6 +39,7 @@ class MandelbrotApp:
 
 
     def Correr(self):
+        capt = 0
         while True:
             self.Fractal.DibujarArreglo(self.itera, self.xmin, self.xmax, self.ymin, self.ymax)
 
@@ -52,6 +53,9 @@ class MandelbrotApp:
                         self.itera += 50
                     if evento.key == pg.K_DOWN:
                         self.itera -= 50
+                    if evento.key == pg.K_c:
+                        pg.image.save(self.Ventana, f"CapturaMandelbrot{capt}.png")
+                        capt+=1
 
                 elif evento.type == pg.MOUSEWHEEL:
                     x, y = pg.mouse.get_pos()

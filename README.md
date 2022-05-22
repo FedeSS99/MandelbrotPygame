@@ -34,6 +34,12 @@ Arreglo[i,j,2] = 255*(0.5*(1.0+sin(0.1*t + 2.0)) )
 El entorno utilizado para mostrar el conjunto de Mandelbrot es OpenCV por lo que se asignaron teclas con acciones para manipular las variables que establecen los cálculos del conjunto:
 - Flecha arriba: Disminuir cantidad de iteraciones por 50
 - Flecha abajo: Aumentar cantidad de iteraciones por 50
+- c: Realizar una captura de la ventana y guardar como .png
 - r: Reiniciar los valores minimos, maximos a los iniciales
 
 Además de que con la rueda del mouse es posible alejarse/acercarse a una región del conjunto.
+
+## Ejemplo 
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/CapturaMandelbrot0.png?raw=true)
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/CapturaMandelbrot1.png?raw=true)
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/CapturaMandelbrot2.png?raw=true)
