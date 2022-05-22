@@ -1,0 +1,39 @@
+# Conjunto-de-Mandelbrot
+
+## Teoría
+El conjunto de Mandelbrot se describe como aquel que se define en el espacio complejo bajo la siguiente ecuación:
+```diff
+ Z_{n+1}=Z_{n}^2 + C
+```
+donde tendremos que la constante C estará evaluandose en una región de interes bajo la siguiente forma compleja:
+```diff
+ C = x + i y
+```
+Este conjunto es altamente sensible a las condiciones iniciales, o dicho de otro modo, al valor de C que se tome; por tanto tendremos casos en que la serie converga a un valor o a una 
+serie de valores o bien podrá diverger a infinito. Ahora, como se tratan de números complejos tendremos la necesidad de expresar de forma explicita el cuadrado de un número 
+complejo:
+```diff
+ z = x + i y -> z^2 = x^2-y^2 + 2xy i 
+```
+La operación se aplicara de forma iterada siguiendo así el comportamiento de convergencia o divergencia.
+
+## Evaluación y visualización del conjunto
+Puesto que no es posible calcular infinitas iteraciones de la función generadora se ve la necesidad de fijar una cantidad de iteraciones máxima que delimite la cantidad de 
+operaciones que se realicen por pixel en el conjunto por visualizar; siendo que el arreglo que se utilizará para dar con el conjunto consistira en valores localizados entre 0 y 1.
+Inicialmente se encuentran todos los elementos con valor de 0 pero al obtener la cantidad de iteraciones de un número complejo fijo tendremos que tener un arreglo de 3 canales de dimension (Ny,Nx) que conformaran los canales de color RGB. Para cada canal se utiliza funciones senoidales tal que
+```diff
+t = iteraciones
+```
+Y para cada canal tendremos que
+```diff
+Arreglo[i,j,0] = 255*(0.5*(1.0+sin(0.1*t)))
+Arreglo[i,j,1] = 255*(0.5*(1.0+sin(0.1*t + 1.0)) )
+Arreglo[i,j,2] = 255*(0.5*(1.0+sin(0.1*t + 2.0)) )
+```
+## Interacciones con usuario
+El entorno utilizado para mostrar el conjunto de Mandelbrot es OpenCV por lo que se asignaron teclas con acciones para manipular las variables que establecen los cálculos del conjunto:
+- Flecha arriba: Disminuir cantidad de iteraciones por 50
+- Flecha abajo: Aumentar cantidad de iteraciones por 50
+- r: Reiniciar los valores minimos, maximos a los iniciales
+
+Además de que con la rueda del mouse es posible alejarse/acercarse a una región del conjunto.
