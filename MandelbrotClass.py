@@ -65,4 +65,4 @@ class MandelbrotApp:
 
             pg.display.flip()
             self.Reloj.tick()
-            pg.display.set_caption(f"FPS: {int(self.Reloj.get_fps()):d}  Iteraciones: {self.itera}")
+            pg.display.set_caption(f"FPS: {int(self.Reloj.get_fps()):d}  Iteraciones: {self.itera}  Dims: {self.largo},{self.alto}")
