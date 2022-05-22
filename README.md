@@ -40,6 +40,6 @@ El entorno utilizado para mostrar el conjunto de Mandelbrot es OpenCV por lo que
 Además de que con la rueda del mouse es posible alejarse/acercarse a una región del conjunto.
 
 ## Ejemplo 
-![alt text](https://github.com/FedeSS99/Ejemplos/MandelbrotPygame/blob/master/CapturaMandelbrot0.png?raw=true)
-![alt text](https://github.com/FedeSS99/Ejemplos/MandelbrotPygame/blob/master/CapturaMandelbrot1.png?raw=true)
-![alt text](https://github.com/FedeSS99/Ejemplos/MandelbrotPygame/blob/master/CapturaMandelbrot2.png?raw=true)
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/Ejemplos/CapturaMandelbrot0.png?raw=true)
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/Ejemplos/CapturaMandelbrot1.png?raw=true)
+![alt text](https://github.com/FedeSS99/MandelbrotPygame/blob/master/Ejemplos/CapturaMandelbrot2.png?raw=true)
