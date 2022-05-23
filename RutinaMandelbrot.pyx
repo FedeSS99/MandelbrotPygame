@@ -10,20 +10,16 @@ cimport numpy as np
 ctypedef np.float64_t Dtype_t
 ctypedef np.uint8_t Utype_t
 
-cdef extern from "math.h":
-    Dtype_t sin(Dtype_t arg) nogil
-    Dtype_t fabs(Dtype_t arg) nogil
-
 
 @cython.nonecheck(False)
 @cython.wraparound(False)
 @cython.boundscheck(False)
 @cython.cdivision(True)
 @cython.profile(False)
-cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
+cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Utype_t, ndim=2] Colores, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
     cdef:
-        int i,j, maxThreads
-        Dtype_t x, y, x0, y0, xtemp, iteracion
+        int i,j, iteracion, maxThreads
+        Dtype_t x, y, x0, y0, xtemp
         Dtype_t r,g,b
         int W = Conjunto.shape[0]
         int H = Conjunto.shape[1]
@@ -41,23 +37,19 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, 
             x0 = FactorReal*<Dtype_t>i + xmin
             y0 = ymax - FactorIma*<Dtype_t>j
             iteracion = 0
-            while iteracion < MaxIter and x*x + y*y <= 4.0:
+            while iteracion <= MaxIter-1 and x*x + y*y <= 4.0:
                 xtemp = x*x - y*y + x0
                 y = 2.0*x*y + y0
                 x = xtemp
                 iteracion = iteracion + 1
 
-            r = 255*(0.5*(1.0+sin(<Dtype_t>iteracion*0.25 + 1.0)) )
-            g = 255*(0.5*(1.0+sin(<Dtype_t>iteracion*0.5 + 2.0)) )
-            b = 255*(0.5*(1.0+sin(<Dtype_t>iteracion*0.75 + 3.0)) )
-
-            Conjunto[i,j,0] = <Utype_t> r
-            Conjunto[i,j,1] = <Utype_t> g
-            Conjunto[i,j,2] = <Utype_t> b
+            Conjunto[i,j,0] = Colores[0,iteracion]
+            Conjunto[i,j,1] = Colores[1,iteracion]
+            Conjunto[i,j,2] = Colores[2,iteracion]
 
 @cython.nonecheck(False)
-def CythonMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
-    CicloParaleloMandelbrot(Conjunto, MaxIter, xmin, xmax, ymin, ymax)
+def CythonMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Utype_t, ndim=2] Colores, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
+    CicloParaleloMandelbrot(Conjunto, Colores, MaxIter, xmin, xmax, ymin, ymax)
 
 
 cdef Dtype_t InterpolacionLineal(Dtype_t inicio, Dtype_t final, Dtype_t tasa):

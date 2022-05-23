@@ -1,5 +1,5 @@
 import pygame as pg
-from numpy import uint8, zeros
+from numpy import uint8, array, zeros, sin, arange
 from RutinaMandelbrot import CythonMandelbrot, ZoomInOutConjunto
 
 class MandelbrotFractal:
@@ -8,13 +8,14 @@ class MandelbrotFractal:
     de PyGame, además se posee la función DibujarArreglo que estará aplicando
     la función iterativa en el plano complejo bajo la condición de convergencia
     """
-    def __init__(self, ventana):
+    def __init__(self, ventana, colores):
         self.ventana = ventana
+        self.colores = colores
         self.largo, self.alto = ventana.get_size()
         self.ArrayEspacio = zeros((self.largo,self.alto,3), dtype=uint8)
 
-    def DibujarArreglo(self,itera, xmin, xmax, ymin, ymax):
-        CythonMandelbrot(self.ArrayEspacio, itera, xmin, xmax, ymin, ymax)
+    def DibujarArreglo(self, itera, xmin, xmax, ymin, ymax):
+        CythonMandelbrot(self.ArrayEspacio, self.colores, itera, xmin, xmax, ymin, ymax)
         pg.surfarray.blit_array(self.ventana, self.ArrayEspacio)
 
 class MandelbrotApp:
@@ -31,10 +32,14 @@ class MandelbrotApp:
         self.RegPos = (xmin, xmax, ymin, ymax)
         self.xmin, self.xmax, self.ymin, self.ymax = xmin, xmax, ymin, ymax
 
+        r = 255*(0.5*(1.0+sin(arange(0,self.itera)*0.25 + 1.0)) )
+        g = 255*(0.5*(1.0+sin(arange(0,self.itera)*0.5 + 2.0)) )
+        b = 255*(0.5*(1.0+sin(arange(0,self.itera)*0.75 + 3.0)) )
+        self.colores = array([r,g,b], dtype=uint8)
         
         self.Ventana = pg.display.set_mode(res, pg.SCALED, 8)
         self.Reloj = pg.time.Clock()
-        self.Fractal = MandelbrotFractal(self.Ventana)
+        self.Fractal = MandelbrotFractal(self.Ventana, self.colores)
         pg.event.set_allowed([pg.QUIT,pg.KEYDOWN,pg.MOUSEWHEEL])
 
 
