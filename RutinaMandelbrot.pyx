@@ -37,7 +37,7 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Ut
             x0 = FactorReal*<Dtype_t>i + xmin
             y0 = ymax - FactorIma*<Dtype_t>j
             iteracion = 0
-            while iteracion <= MaxIter-1 and x*x + y*y <= 4.0:
+            while iteracion <= MaxIter-2 and x*x + y*y <= 4.0:
                 xtemp = x*x - y*y + x0
                 y = 2.0*x*y + y0
                 x = xtemp
