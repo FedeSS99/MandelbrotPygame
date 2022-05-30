@@ -14,6 +14,7 @@ class MandelbrotFractal:
         self.ArrayEspacio = zeros((self.largo,self.alto,3), dtype=uint8)
 
     def DibujarArreglo(self, colores, itera, xmin, xmax, ymin, ymax):
+        self.ArrayEspacio[:,:,:] = 0
         CythonMandelbrot(self.ArrayEspacio, colores, itera, xmin, xmax, ymin, ymax)
         pg.surfarray.blit_array(self.ventana, self.ArrayEspacio)
 
@@ -42,10 +43,8 @@ class MandelbrotApp:
 
 
     def CoordsPlanoVentana(self):
-        self.FactorReal = (self.xmax-self.xmin)/(self.largo-1) 
-        self.FactorIma = (self.ymax-self.ymin)/(self.alto-1)
         xVentana, yVentana = pg.mouse.get_pos()
-        return xVentana, yVentana, xVentana*self.FactorReal, yVentana*self.FactorIma
+        return xVentana, yVentana, self.xmin + xVentana*self.FactorReal, self.ymax - yVentana*self.FactorIma
 
     def ObtenerRGB(self):
         x=arange(0,self.itera)
@@ -80,11 +79,8 @@ class MandelbrotApp:
                     x, y = pg.mouse.get_pos()
                     self.xmin, self.xmax, self.ymin, self.ymax = ZoomInOutConjunto(self.largo, self.alto, x, y, 
                     evento.y, self.xmin, self.xmax, self.ymin, self.ymax)
-
-            if pg.mouse.get_pressed()[0] == True:
-                x, y, xPlano, yPlano = self.CoordsPlanoVentana()
-                textoCoords = self.font.render(f"({xPlano:1.3e},{yPlano:1.3e})",False,(0,0,0))
-                self.Ventana.blit(textoCoords,(x,y))
+                    self.FactorReal = (self.xmax-self.xmin)/(self.largo-1) 
+                    self.FactorIma = (self.ymax-self.ymin)/(self.alto-1)
 
             pg.display.flip()
             self.Reloj.tick()

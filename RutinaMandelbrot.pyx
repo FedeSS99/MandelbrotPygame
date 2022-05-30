@@ -24,6 +24,7 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Ut
         int W = Conjunto.shape[0]
         int H = Conjunto.shape[1]
         Dtype_t FactorReal,FactorIma
+        int LimMax = MaxIter - 1
     
     maxThreads = <int>omp_get_max_threads()
     omp_set_num_threads(maxThreads)
@@ -37,15 +38,16 @@ cdef CicloParaleloMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Ut
             x0 = FactorReal*<Dtype_t>i + xmin
             y0 = ymax - FactorIma*<Dtype_t>j
             iteracion = 0
-            while iteracion <= MaxIter-2 and x*x + y*y <= 4.0:
+            while iteracion <= LimMax -1  and x*x + y*y <= 4.0:
                 xtemp = x*x - y*y + x0
                 y = 2.0*x*y + y0
                 x = xtemp
                 iteracion = iteracion + 1
 
-            Conjunto[i,j,0] = Colores[0,iteracion]
-            Conjunto[i,j,1] = Colores[1,iteracion]
-            Conjunto[i,j,2] = Colores[2,iteracion]
+            if iteracion < LimMax:
+                Conjunto[i,j,0] = Colores[0,iteracion]
+                Conjunto[i,j,1] = Colores[1,iteracion]
+                Conjunto[i,j,2] = Colores[2,iteracion]
 
 @cython.nonecheck(False)
 def CythonMandelbrot(np.ndarray[Utype_t, ndim=3] Conjunto, np.ndarray[Utype_t, ndim=2] Colores, int MaxIter, Dtype_t xmin, Dtype_t xmax, Dtype_t ymin, Dtype_t ymax):
