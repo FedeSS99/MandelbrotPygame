@@ -10,11 +10,11 @@ args = parser.parse_args()
 if args.Nx is not None:
     Nx = args.Nx
 else:
-    Nx = 300
+    Nx = 600
 if args.Ny is not None:
     Ny = args.Ny
 else:
-    Ny = 300
+    Ny = 600
 
 resolucion = (Nx,Ny)
 xmin, xmax, ymin, ymax = -2.0, 0.5, -1.5, 1.5
