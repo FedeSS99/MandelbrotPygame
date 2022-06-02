@@ -1,6 +1,6 @@
 import pygame as pg
 from numpy import uint8, pi, array, zeros, sin, arange
-from RutinaMandelbrot import CythonMandelbrot, ZoomInOutConjunto
+from RutinaMandelbrot import CythonMandelbrot, ZoomInOutConjunto, ObtenerTrayectoria, DibujarTrayectoria
 
 class MandelbrotFractal:
     """
@@ -81,6 +81,13 @@ class MandelbrotApp:
                     evento.y, self.xmin, self.xmax, self.ymin, self.ymax)
                     self.FactorReal = (self.xmax-self.xmin)/(self.largo-1) 
                     self.FactorIma = (self.ymax-self.ymin)/(self.alto-1)
+
+                if pg.mouse.get_pressed()[0] == True:
+                    x, y = pg.mouse.get_pos()
+                    Trayectoria, Conds = ObtenerTrayectoria(x, y, self.FactorReal, self.FactorIma,
+                    self.itera, self.xmin, self.xmax, self.ymin, self.ymax)
+                    DibujarTrayectoria(Conds, Trayectoria, self.Ventana)
+
 
             pg.display.flip()
             self.Reloj.tick()
