@@ -33,7 +33,7 @@ El entorno utilizado para mostrar el conjunto de Mandelbrot es OpenCV por lo que
 - c: Realizar una captura de la ventana y guardar como .png
 - r: Reiniciar los valores minimos, maximos a los iniciales
 
-Además de que con la rueda del mouse es posible alejarse/acercarse a una región del conjunto y con clck izquierdo es posible
+Además de que con la rueda del mouse es posible alejarse/acercarse a una región del conjunto y con click izquierdo es posible
 visualizar las coordenadas obtenidas bajo la función iterada.
 
 ## Ejemplo 
